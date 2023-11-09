@@ -19,6 +19,14 @@ function love.update(dt)
     if love.keyboard.isDown("left") then
         spaceshipImage.x = spaceshipImage.x - spaceshipImage.speed
     end
+
+    if love.keyboard.isDown("down") then
+        spaceshipImage.y = spaceshipImage.y + spaceshipImage.speed
+    end
+
+    if love.keyboard.isDown("up") then
+        spaceshipImage.y = spaceshipImage.y - spaceshipImage.speed
+    end
 end
 
 --Also runs every frame, this renders graphics on screen
