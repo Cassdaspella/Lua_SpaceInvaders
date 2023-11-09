@@ -40,8 +40,8 @@ function love.update(dt)
         spaceshipImage.y = 0
     end
 
-    if spaceshipImage.y > 700 then
-        spaceshipImage.y = 700
+    if spaceshipImage.y > 550 then
+        spaceshipImage.y = 550
     end
     
 end
