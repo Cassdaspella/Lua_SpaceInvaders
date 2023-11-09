@@ -8,6 +8,12 @@ function love.load()
     spaceshipImage.speed = 4
     spaceshipImage.sprite = love.graphics.newImage('images/placeholder.png')
     background = love.graphics.newImage('images/background.png')
+    pewpewImage = {}
+    pewpewImage.x = 400
+    pewpewImage.y = 500
+    pewpewImage.speed = 4
+    pewpewImage.sprite = love.graphics.newImage('images/pewpew.png')
+
 end
 
 --Runs every frame, basically runs everything in here in inf loop as fast as possible
@@ -26,6 +32,17 @@ function love.update(dt)
 
     if love.keyboard.isDown("up") then
         spaceshipImage.y = spaceshipImage.y - spaceshipImage.speed
+    end
+
+    if love.keyboard.isDown("space") then
+        pewpewImage.speed = 100
+        if(love.keyboard.isDown("left")) then
+            pewpewSpeed = pewpewSpeed -  spaceshipImage.speed/2
+          else if(love.keyboard.isDown("right")) then
+            pewpewSpeed = pewpewSpeed + spaceshipImage.speed/2
+          end
+          spawnPewpew(spaceshipImage.x, spaceshipImage.y/2, pewpewSpeed)
+        end
     end
 
     if spaceshipImage.x < 0 then
