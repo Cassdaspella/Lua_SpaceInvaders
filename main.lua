@@ -9,9 +9,10 @@ function love.load()
     spaceshipImage.sprite = love.graphics.newImage('images/placeholder.png')
     background = love.graphics.newImage('images/background.png')
     pewpewImage = {}
-    pewpewImage.x = 400
-    pewpewImage.y = 500
-    pewpewImage.speed = 4
+    pewpewImage.x = spaceshipImage.x 
+    pewpewImage.y = spaceshipImage.y
+    pewpewImage.speed = 8
+    pewpewImage.active = false
     pewpewImage.sprite = love.graphics.newImage('images/pewpew.png')
 
 end
@@ -35,13 +36,18 @@ function love.update(dt)
     end
 
     if love.keyboard.isDown("space") then
-        pewpewImage.speed = 100
-        if(love.keyboard.isDown("left")) then
-            pewpewSpeed = pewpewSpeed -  spaceshipImage.speed/2
-          else if(love.keyboard.isDown("right")) then
-            pewpewSpeed = pewpewSpeed + spaceshipImage.speed/2
-          end
-          spawnPewpew(spaceshipImage.x, spaceshipImage.y/2, pewpewSpeed)
+        pewpewImage.active = true
+        pewpewImage.x = spaceshipImage.x + spaceshipImage.sprite:getWidth() / 2 - pewpewImage.sprite:getWidth() / 2
+        pewpewImage.y = spaceshipImage.y
+    end
+
+    if pewpewImage.active then
+        -- Move the pewpewImage up when it's active
+        pewpewImage.y = pewpewImage.y - pewpewImage.speed
+
+        -- Check if the pewpewImage is out of the screen and deactivate it
+        if pewpewImage.y < 0 then
+            pewpewImage.active = false
         end
     end
 
@@ -68,5 +74,9 @@ function love.draw()
     --running this will show you it runs every frame, this randomizes the image's position
     love.graphics.draw(background, 0, -200)
     love.graphics.draw(spaceshipImage.sprite, spaceshipImage.x, spaceshipImage.y)
+
+    if pewpewImage.active then
+        love.graphics.draw(pewpewImage.sprite, pewpewImage.x, pewpewImage.y)
+    end
     
 end
