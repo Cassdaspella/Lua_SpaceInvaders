@@ -8,7 +8,14 @@ function love.load()
     spaceshipImage.speed = 4
     spaceshipImage.sprite = love.graphics.newImage('images/placeholder.png')
     background = love.graphics.newImage('images/background.png')
+
+    sounds = {}
+    sounds.pew = love.audio.newSource("sounds/pew.mp3", "static")
+    sounds.music = love.audio.newSource("sounds/music.mp3", "stream")
+    sounds.music:setLooping(true)
+    sounds.music:play()
 end
+
 
 --Runs every frame, basically runs everything in here in inf loop as fast as possible
 function love.update(dt)
@@ -52,4 +59,11 @@ function love.draw()
     love.graphics.draw(background, 0, -200)
     love.graphics.draw(spaceshipImage.sprite, spaceshipImage.x, spaceshipImage.y)
     
+end
+
+--If spacebar is pressed, play pew sound effect
+function love.keypressed(key)
+    if key == "space" then
+        sounds.pew:play()
+    end
 end
