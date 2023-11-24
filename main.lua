@@ -5,7 +5,7 @@ function love.load()
     spaceshipImage = {}
     spaceshipImage.x = 400
     spaceshipImage.y = 500
-    spaceshipImage.speed = 4
+    spaceshipImage.speed = 300
     spaceshipImage.sprite = love.graphics.newImage('images/placeholder.png')
     background = love.graphics.newImage('images/background.png')
     pewpewImages = {}
@@ -26,19 +26,19 @@ end
 --Runs every frame, basically runs everything in here in inf loop as fast as possible
 function love.update(dt)
     if love.keyboard.isDown("right") then
-        spaceshipImage.x = spaceshipImage.x + spaceshipImage.speed
+        spaceshipImage.x = spaceshipImage.x + spaceshipImage.speed*dt
     end
 
     if love.keyboard.isDown("left") then
-        spaceshipImage.x = spaceshipImage.x - spaceshipImage.speed
+        spaceshipImage.x = spaceshipImage.x - spaceshipImage.speed*dt
     end
 
     if love.keyboard.isDown("down") then
-        spaceshipImage.y = spaceshipImage.y + spaceshipImage.speed
+        spaceshipImage.y = spaceshipImage.y + spaceshipImage.speed*dt
     end
 
     if love.keyboard.isDown("up") then
-        spaceshipImage.y = spaceshipImage.y - spaceshipImage.speed
+        spaceshipImage.y = spaceshipImage.y - spaceshipImage.speed*dt
     end
 
     if love.keyboard.isDown("space") and shootThisKeyPress == false then
@@ -47,7 +47,7 @@ function love.update(dt)
             active = true,
             x = spaceshipImage.x,
             y = spaceshipImage.y,
-            speed = 8,
+            speed = 600,
             sprite = love.graphics.newImage('images/pewpew.png')
         }
     end
@@ -58,7 +58,7 @@ function love.update(dt)
 
     for x,i in pairs(pewpewImages) do
         if i.active then
-            i.y = i.y-i.speed
+            i.y = i.y-i.speed*dt
         end
         if i.y < 0 then
             i.active = false
