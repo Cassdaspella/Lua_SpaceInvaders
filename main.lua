@@ -15,8 +15,13 @@ function love.load()
     -- pewpewImages.active = false
     -- pewpewImages.sprite = love.graphics.newImage('images/pewpew.png')
     shootThisKeyPress = false; --this bool is used to make sure only one bullet is produced per spacebar press
-
+    sounds = {}
+    sounds.pew = love.audio.newSource("sounds/pew.mp3", "static")
+    sounds.music = love.audio.newSource("sounds/music.mp3", "stream")
+    sounds.music:setLooping(true)
+    sounds.music:play()
 end
+
 
 --Runs every frame, basically runs everything in here in inf loop as fast as possible
 function love.update(dt)
@@ -103,4 +108,11 @@ function love.draw()
         end
     end
     
+end
+
+--If spacebar is pressed, play pew sound effect
+function love.keypressed(key)
+    if key == "space" then
+        sounds.pew:play()
+    end
 end
