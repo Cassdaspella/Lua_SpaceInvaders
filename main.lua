@@ -1,3 +1,4 @@
+
 --This is the basic Game Loop
 
 --love.load() is the function that is run one time when the game is run
@@ -5,7 +6,7 @@ function love.load()
     spaceshipImage = {}
     spaceshipImage.x = 400
     spaceshipImage.y = 500
-    spaceshipImage.speed = 300
+    spaceshipImage.speed = 600
     spaceshipImage.sprite = love.graphics.newImage('images/placeholder.png')
     background = love.graphics.newImage('images/background.png')
     
@@ -38,12 +39,10 @@ function love.update(dt)
             x = love.math.random(0, 800),
             y = 0,
             speed = 200,
-            sprite = love.graphics.newImage('images/placeholder.png') --TODO change to asteroid pic
+            sprite = love.graphics.newImage('images/asteroid.png') --TODO change to asteroid pic
         }
         asteroidTimer = asteroidTimer + 1 --reset 1 second timer
     end
-
-    
 
 
     if love.keyboard.isDown("right") then
@@ -93,6 +92,13 @@ function love.update(dt)
         if i.y > 550 then --disable sprite one out of canvas bounds
             i.active = false
         end
+        -- if asteroid sprite is outside of bounds put it inside bounds
+        if i.y < 0 then 
+            i.y = 0
+        end
+        if i.y > 750 then
+            i.y = 750
+        end
     end
 
     -- if pewpewImages[#pewpewImages].active then
@@ -120,6 +126,8 @@ function love.update(dt)
     if spaceshipImage.y > 550 then
         spaceshipImage.y = 550
     end
+
+
     
 end
 
