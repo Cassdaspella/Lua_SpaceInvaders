@@ -8,6 +8,10 @@ function love.load()
     spaceshipImage.speed = 300
     spaceshipImage.sprite = love.graphics.newImage('images/placeholder.png')
     background = love.graphics.newImage('images/background.png')
+    
+    asteroidImages = {}
+    asteroidTimer = 1 
+    
     pewpewImages = {}
     -- pewpewImages.x = spaceshipImage.x 
     -- pewpewImages.y = spaceshipImage.y
@@ -15,16 +19,33 @@ function love.load()
     -- pewpewImages.active = false
     -- pewpewImages.sprite = love.graphics.newImage('images/pewpew.png')
     shootThisKeyPress = false; --this bool is used to make sure only one bullet is produced per spacebar press
+    
     sounds = {}
     sounds.pew = love.audio.newSource("sounds/pew.mp3", "static")
     sounds.music = love.audio.newSource("sounds/music.mp3", "stream")
     sounds.music:setLooping(true)
     sounds.music:play()
+
 end
 
 
 --Runs every frame, basically runs everything in here in inf loop as fast as possible
 function love.update(dt)
+    asteroidTimer = asteroidTimer - dt
+    if  asteroidTimer <= 0 then --if 3 seconds have passed
+            asteroidImages[#asteroidImages+1] = { --add another asteroid
+            active = true,
+            x = love.math.random(0, 800),
+            y = 0,
+            speed = 200,
+            sprite = love.graphics.newImage('images/placeholder.png') --TODO change to asteroid pic
+        }
+        asteroidTimer = asteroidTimer + 1 --reset 1 second timer
+    end
+
+    
+
+
     if love.keyboard.isDown("right") then
         spaceshipImage.x = spaceshipImage.x + spaceshipImage.speed*dt
     end
@@ -61,6 +82,15 @@ function love.update(dt)
             i.y = i.y-i.speed*dt
         end
         if i.y < 0 then
+            i.active = false
+        end
+    end
+
+    for x,i in pairs(asteroidImages) do
+        if i.active then
+            i.y = i.y+i.speed*dt -- y+ speed here since the asteroids are moving downward
+        end
+        if i.y > 550 then --disable sprite one out of canvas bounds
             i.active = false
         end
     end
@@ -103,6 +133,12 @@ function love.draw()
     --     love.graphics.draw(pewpewImages.sprite, pewpewImages.x, pewpewImages.y)
     -- end
     for x,i in pairs(pewpewImages) do
+        if i.active == true then
+            love.graphics.draw(i.sprite, i.x, i.y)
+        end
+    end
+
+    for x,i in pairs(asteroidImages) do
         if i.active == true then
             love.graphics.draw(i.sprite, i.x, i.y)
         end
