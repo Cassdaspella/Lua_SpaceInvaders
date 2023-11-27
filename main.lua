@@ -169,6 +169,9 @@ function love.draw()
         if i.active == true then
             love.graphics.draw(i.sprite, i.x, i.y)
         end
+        if i.y > 550 then
+            love.event.quit()
+        end
     end
 
     love.graphics.print("Score:" .. score, 16, 16, 0, 1.5)
