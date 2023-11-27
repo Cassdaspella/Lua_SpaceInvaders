@@ -110,6 +110,7 @@ function love.update(dt)
     --         pewpewImages.active = false
     --     end
     -- end
+    
 
     if spaceshipImage.x < 0 then
         spaceshipImage.x = 0
@@ -126,10 +127,27 @@ function love.update(dt)
     if spaceshipImage.y > 550 then
         spaceshipImage.y = 550
     end
-
+    for x, pewpew in pairs(pewpewImages) do
+        if pewpew.active then
+          pewpew.y = pewpew.y - pewpew.speed * dt
+          for _, asteroid in pairs(asteroidImages) do
+            if asteroid.active and checkCollision(pewpew, asteroid) then
+              asteroid.active = false 
+              pewpew.active = false  
+            end
+          end
+        end
+      end
 
     
 end
+
+function checkCollision(a, b)
+    return a.x < b.x + b.sprite:getWidth() and
+           a.x + a.sprite:getWidth() > b.x and
+           a.y < b.y + b.sprite:getHeight() and
+           a.y + a.sprite:getHeight() > b.y
+  end
 
 --Also runs every frame, this renders graphics on screen
 function love.draw()
