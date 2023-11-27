@@ -128,6 +128,7 @@ function love.update(dt)
                 if asteroid.active and checkCollision(pewpew, asteroid) then
                     asteroid.active = false 
                     pewpew.active = false  
+                    score = score+5
                 end
             end
         end
@@ -169,6 +170,8 @@ function love.draw()
             love.graphics.draw(i.sprite, i.x, i.y)
         end
     end
+
+    love.graphics.print("Score:" .. score, 16, 16, 0, 1.5)
     
 end
 
