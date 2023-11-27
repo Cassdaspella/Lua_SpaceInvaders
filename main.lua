@@ -27,6 +27,7 @@ function love.load()
     sounds.music:setLooping(true)
     sounds.music:play()
 
+    score = 0
 end
 
 
@@ -132,7 +133,11 @@ function love.update(dt)
         end
     end
 
-    
+    for _, asteroid in pairs(asteroidImages) do
+        if asteroid.active and checkCollision(spaceshipImage, asteroid) then
+            love.event.quit()
+        end
+    end
 
     
 end
