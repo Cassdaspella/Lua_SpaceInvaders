@@ -36,7 +36,7 @@ function love.update(dt)
     if  asteroidTimer <= 0 then --if 3 seconds have passed
             asteroidImages[#asteroidImages+1] = { --add another asteroid
             active = true,
-            x = love.math.random(0, 800),
+            x = love.math.random(30, 700),
             y = 0,
             speed = 200,
             sprite = love.graphics.newImage('images/asteroid.png') --TODO change to asteroid pic
@@ -92,13 +92,6 @@ function love.update(dt)
         if i.y > 550 then --disable sprite one out of canvas bounds
             i.active = false
         end
-        -- if asteroid sprite is outside of bounds put it inside bounds
-        if i.y < 0 then 
-            i.y = 0
-        end
-        if i.y > 750 then
-            i.y = 750
-        end
     end
 
     -- if pewpewImages[#pewpewImages].active then
@@ -130,24 +123,26 @@ function love.update(dt)
     for x, pewpew in pairs(pewpewImages) do
         if pewpew.active then
           pewpew.y = pewpew.y - pewpew.speed * dt
-          for _, asteroid in pairs(asteroidImages) do
-            if asteroid.active and checkCollision(pewpew, asteroid) then
-              asteroid.active = false 
-              pewpew.active = false  
+            for _, asteroid in pairs(asteroidImages) do
+                if asteroid.active and checkCollision(pewpew, asteroid) then
+                    asteroid.active = false 
+                    pewpew.active = false  
+                end
             end
-          end
         end
-      end
+    end
+
+    
 
     
 end
 
 function checkCollision(a, b)
     return a.x < b.x + b.sprite:getWidth() and
-           a.x + a.sprite:getWidth() > b.x and
-           a.y < b.y + b.sprite:getHeight() and
-           a.y + a.sprite:getHeight() > b.y
-  end
+        a.x + a.sprite:getWidth() > b.x and
+        a.y < b.y + b.sprite:getHeight() and
+        a.y + a.sprite:getHeight() > b.y
+end
 
 --Also runs every frame, this renders graphics on screen
 function love.draw()
